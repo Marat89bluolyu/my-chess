@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Board from './Board';
-import {BLACK} from './actions';
-import changeColor from './reducers'
+import chess from './reducers'
 import {createStore} from 'redux';
 import {Provider, connect} from 'react-redux';
+import {observe} from "./Game";
 
-let store = createStore(changeColor);
+let store = createStore(chess);
 
 ReactDOM.render(
 	<Provider store = { store }>
-		<Board knightPosition={[7, 4]}/>
+		<Board knightPosition = {store.getState().pos.KNIGHT}/>
 	</Provider>,
-	document.getElementById('root'));
+	document.getElementById('root')
+)
