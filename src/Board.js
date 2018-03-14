@@ -6,50 +6,43 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import Square from './Square';
+import BoardSquare from './BoardSquare';
 import Knight from './Knight';
-import * as pageActions from './Game';
+import {canMoveKnight, moveKnight} from './Game';
 
 class Board extends Component {
 
 	renderSquare(i) {
+        const {store} = this.props;
+        const [knightX, knightY] = store.KNIGHT;
 		const x = i % 8;
 		const y = Math.floor(i / 8);
-		const black = (x + y) % 2 === 1;
-		const {store} = this.props;
-		const [knightX, knightY] = store.KNIGHT;
-		const piece = (x === knightX && y === knightY)?
-		<Knight/> :
-		null;
 
 		return (
 			<div key={i}
-			     style={{  width: '12.5%', height: '60px' }}
-                 onClick={()=>{this.handleSquareClick(x,y)}}>
-				<Square black={black}>
-					{piece}
-				</Square>
+			     style={{  width: '12.5%', height: '60px' }}>
+				<BoardSquare handleSquareClick={this.handleSquareClick} x={x} y={y} storeKnight={store} >
+					{this.renderPiece(x, y)}
+				</BoardSquare>
 			</div>
 		)
 	}
 
-	handleSquareClick(toX, toY){
-		const { moveKnight } = this.props.moveKnight;
-
-        if (this.canMoveKnight(toX, toY)) {
-            moveKnight(toX, toY);
+	renderPiece(x,y){
+        const {store} = this.props;
+        const [knightX, knightY] = store.KNIGHT;
+        if (x === knightX && y === knightY) {
+            return <Knight />;
         }
 	}
 
-    canMoveKnight(toX, toY) {
-        const {store} = this.props;
-        const [x, y] = store.KNIGHT;
-        const dx = toX - x;
-        const dy = toY - y;
-
-        return (Math.abs(dx) === 2 && Math.abs(dy) === 1) ||
-            (Math.abs(dx) === 1 && Math.abs(dy) === 2);
-    }
+	handleSquareClick = (toX, toY) =>{
+		const {moveKnight} = this.props;
+		const {store} = this.props;
+        // if (canMoveKnight(toX, toY, store)) {
+            moveKnight(toX, toY);
+        // }
+	}
 
 	render() {
 		const squares = [];
@@ -80,9 +73,11 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-	return {
-		moveKnight: bindActionCreators(pageActions, dispatch)
-	}
+	return bindActionCreators(
+		{
+			moveKnight
+		},
+		dispatch)
 }
 
 export default DragDropContext(HTML5Backend)

@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { ItemTypes } from './constants';
 import { DragSource } from 'react-dnd';
+import {imageLink} from './constants';
 
 const knightSource = {
     beginDrag(props) {
@@ -14,12 +15,21 @@ const knightSource = {
 function collect(connect, monitor) {
     return {
         connectDragSource: connect.dragSource(),
+        connectDragPreview: connect.dragPreview(),
         isDragging: monitor.isDragging()
     }
 }
 
 class Knight extends Component {
-	render() {
+    componentDidMount(){
+        const img = new Image();
+        img.src = imageLink;
+        img.onload = () => this.props.connectDragPreview(img);
+    }
+
+
+
+    render() {
         const { connectDragSource, isDragging } = this.props;
 		return connectDragSource(
             <span style={{
