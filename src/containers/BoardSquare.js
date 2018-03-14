@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import { compose } from 'redux';
 import { connect } from 'react-redux'
-import {ItemTypes} from './constants';
+import {ItemTypes} from '../constants/index';
 import { DropTarget } from 'react-dnd';
 
-import Square from './Square';
-import { moveKnight, canMoveKnight } from './Game';
+import Square from '../components/Square';
+import { moveKnight, canMoveKnight } from '../actions/index';
 
 const squareTarget = {
     canDrop(props){
@@ -71,11 +71,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(
-        {
-            moveKnight
-        },
-        dispatch)
+    return bindActionCreators({ moveKnight }, dispatch)
 }
 
 export default compose(

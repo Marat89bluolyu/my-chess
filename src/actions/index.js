@@ -1,7 +1,9 @@
+import {MOVE_KNIGHT} from '../constants';
+
 export function moveKnight(toX, toY) {
-    console.log(toX,toY)
+
     return {
-        type: 'MOVE_KNIGHT',
+        type: MOVE_KNIGHT,
         payload: [toX,toY]
     }
 }

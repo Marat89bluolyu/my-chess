@@ -7,21 +7,23 @@ import { connect } from 'react-redux';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import BoardSquare from './BoardSquare';
-import Knight from './Knight';
-import {canMoveKnight, moveKnight} from './Game';
+import Knight from '../components/Knight';
+import { moveKnight } from '../actions/index';
 
 class Board extends Component {
 
 	renderSquare(i) {
         const {store} = this.props;
-        const [knightX, knightY] = store.KNIGHT;
 		const x = i % 8;
 		const y = Math.floor(i / 8);
 
 		return (
 			<div key={i}
 			     style={{  width: '12.5%', height: '60px' }}>
-				<BoardSquare handleSquareClick={this.handleSquareClick} x={x} y={y} storeKnight={store} >
+				<BoardSquare
+					handleSquareClick={this.dragAndDropSquare}
+					x={x} y={y}
+					storeKnight={store} >
 					{this.renderPiece(x, y)}
 				</BoardSquare>
 			</div>
@@ -36,18 +38,14 @@ class Board extends Component {
         }
 	}
 
-	handleSquareClick = (toX, toY) =>{
+	 dragAndDropSquare = (toX, toY) =>{
 		const {moveKnight} = this.props;
-		const {store} = this.props;
-        // if (canMoveKnight(toX, toY, store)) {
-            moveKnight(toX, toY);
-        // }
+        moveKnight(toX, toY);
+
 	}
 
 	render() {
 		const squares = [];
-		const {store} = this.props;
-		console.log(store.KNIGHT);
 
 		for (let i = 0; i < 64; i++) {
 			squares.push( this.renderSquare( i ) );
@@ -66,18 +64,14 @@ class Board extends Component {
 	}
 }
 
-function mapStateToProps(state) {
+function mapStateToProps( state ) {
 	return {
 		store: state.pos
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-	return bindActionCreators(
-		{
-			moveKnight
-		},
-		dispatch)
+function mapDispatchToProps( dispatch ) {
+	return bindActionCreators( { moveKnight }, dispatch )
 }
 
 export default DragDropContext(HTML5Backend)

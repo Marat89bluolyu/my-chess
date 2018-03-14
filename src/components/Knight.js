@@ -2,9 +2,9 @@
  * Created by Marat on 10.03.2018.
  */
 import React, { Component } from 'react';
-import { ItemTypes } from './constants';
+import { ItemTypes } from '../constants/index';
 import { DragSource } from 'react-dnd';
-import {imageLink} from './constants';
+import {imageLink} from '../constants/index';
 
 const knightSource = {
     beginDrag(props) {
@@ -26,8 +26,6 @@ class Knight extends Component {
         img.src = imageLink;
         img.onload = () => this.props.connectDragPreview(img);
     }
-
-
 
     render() {
         const { connectDragSource, isDragging } = this.props;
