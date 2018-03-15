@@ -21,7 +21,7 @@
     "edit",
     "webpack"
   ],
-  "author": "Dan Abramov <dan.abramov@me.com> (http://github.com/gaearon)",
+  "author": "Marat Alembikov",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/gaearon/react-hot-boilerplate/issues"
@@ -43,6 +43,7 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
+    "prop-types": "^15.6.1",
     "react": "^0.14.6",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",

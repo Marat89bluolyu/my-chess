@@ -1,7 +1,6 @@
-/**
- * Created by Marat on 10.03.2018.
- */
+//THE KNIGHT PIECE COMPONENT
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ItemTypes } from '../constants/index';
 import { DragSource } from 'react-dnd';
 import {imageLink} from '../constants/index';
@@ -12,6 +11,7 @@ const knightSource = {
     }
 };
 
+//HERE WE SPECIFIED ARGUMENTS FOR  {DragSource}
 function collect(connect, monitor) {
     return {
         connectDragSource: connect.dragSource(),
@@ -39,5 +39,10 @@ class Knight extends Component {
 		)
 	}
 }
+
+Knight.propTypes = {
+    connectDragSource: PropTypes.func.isRequired,
+    isDragging: PropTypes.bool.isRequired
+};
 
 export default DragSource(ItemTypes.KNIGHT, knightSource, collect)(Knight);

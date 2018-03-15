@@ -1,11 +1,12 @@
-/**
- * Created by Marat on 10.03.2018.
- */
-import React, {Component} from 'react';
+//THE SINGLE SQUARE PRESENTATIONAL COMPONENT
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Square extends Component {
 	render() {
-		const {black} = this.props;
+
+		{ /*WHEN COMPONENT GET BOOLEAN FROM PROPS - SQUARE WILL BE FILLED*/ }
+		const { black } = this.props;
 		const fill = black ? 'black' : 'white';
 		const stroke = black ? 'white' : 'black';
 
@@ -14,6 +15,10 @@ export default class Square extends Component {
 			color: stroke,
 			width: '100%',
 			height: '100%'
-		}}>{this.props.children}</div>
+		}}>{ this.props.children }</div>
 	}
 }
+
+Square.propTypes = {
+	black: PropTypes.bool
+};

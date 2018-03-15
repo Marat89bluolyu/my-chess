@@ -1,13 +1,17 @@
+//THE SINGLE SQUARE CONTAINER COMPONENT
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import { compose } from 'redux';
 import { connect } from 'react-redux'
-import {ItemTypes} from '../constants/index';
+import {ItemTypes} from '../constants';
 import { DropTarget } from 'react-dnd';
 
 import Square from '../components/Square';
-import { moveKnight, canMoveKnight } from '../actions/index';
+import { moveKnight } from '../actions';
+import { canMoveKnight } from '../helpers';
 
+//HERE WE SPECIFIED ARGUMENTS FOR  {DropTarget}
 const squareTarget = {
     canDrop(props){
         return canMoveKnight(props.x, props.y, props.storeKnight);
@@ -63,6 +67,14 @@ class BoardSquare extends Component {
         );
     }
 }
+
+BoardSquare.propTypes = {
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    connectDropTarget: PropTypes.func.isRequired,
+    isOver: PropTypes.bool.isRequired,
+    canDrop: PropTypes.bool.isRequired
+};
 
 function mapStateToProps(state) {
     return {

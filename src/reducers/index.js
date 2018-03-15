@@ -1,18 +1,15 @@
-/**
- * Created by Marat on 10.03.2018.
- */
+//THE REDUCER FUNCTION
+
 import { MOVE_KNIGHT } from '../constants/index';
 
 const initialState = {
     pos: {
         KNIGHT: [7, 4]
     }
-}
+};
 
-const chess = (
-    state = initialState,
-    action) => {
-    switch (action.type) {
+const chess = ( state = initialState, action ) => {
+    switch ( action.type ) {
         case MOVE_KNIGHT:
                 return {
                     ...state,
@@ -20,6 +17,7 @@ const chess = (
                         KNIGHT: action.payload
                     }
                 }
+
         default:
             return state;
     }
